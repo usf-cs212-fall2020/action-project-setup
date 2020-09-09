@@ -1,0 +1,50 @@
+name: 'Setup Project Tests'
+description: 'Github Action to setup fresh project tests.'
+
+inputs:
+  main_path:
+    required: true
+  test_path:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - name: Copy Fresh Test Code
+    shell: bash
+    run: |
+      echo "Configuring Test Environment..."
+
+      mkdir -p "${{ inputs.main_path }}/src/test/"
+      cp -R "${{ inputs.test_path }}/src/test" "${{ inputs.main_path }}/src/"
+
+  - name: Display Test Classes
+    shell: bash
+    run: |
+      echo ""
+      echo "Code:"
+      ls -CG "${{ inputs.main_path }}/src/main/java"
+
+      echo ""
+      echo "Tests:"
+      ls -CG "${{ inputs.main_path }}/src/test/java"
+
+  - name: Link Test Output
+    shell: bash
+    run: |
+      echo ""
+      echo "Linking Input/Output Files..."
+
+      ln -s "$(pwd)/${{ inputs.test_path }}/expected" "${{ inputs.main_path }}/expected"
+      ln -s "$(pwd)/${{ inputs.test_path }}/input" "${{ inputs.main_path }}/input"
+
+  - name: Display Test Output
+    shell: bash
+    run: |
+      echo ""
+      echo "Input:"
+      ls -CG "${{ inputs.main_path }}/input"
+
+      echo ""
+      echo "Expected:"
+      ls -CG "${{ inputs.main_path }}/expected"
