@@ -13,11 +13,6 @@ runs:
   - name: Copy Fresh Test Code
     shell: bash
     run: |
-      echo "Updating Test Repository..."
-      git config user.name github-actions
-      git config user.email github-actions@github.com      
-      git -C ${{ inputs.test_path }} pull
-      
       echo "Configuring Test Environment..."   
       mkdir -p "${{ inputs.main_path }}/src/test/"
       cp -R "${{ inputs.test_path }}/src/test" "${{ inputs.main_path }}/src/"
