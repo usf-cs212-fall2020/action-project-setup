@@ -27,7 +27,7 @@ runs:
       echo ""
       echo "Tests:"
       ls -CG "${{ inputs.main_path }}/src/test/java"
-
+      
   - name: Link Test Output
     shell: bash
     run: |
@@ -42,7 +42,7 @@ runs:
     run: |
       echo ""
       echo "Input:"
-      ls -CG "${{ inputs.main_path }}/input"
+      ls -aRCG "${{ inputs.main_path }}/input"
 
       echo ""
       echo "Expected:"
