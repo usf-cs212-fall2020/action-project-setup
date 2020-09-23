@@ -10,10 +10,18 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - name: Clean Up Folders
+    shell: bash
+    run: |
+      echo "Cleaning Test Environment..."
+      if [ -d "${{ inputs.main_path }}/src/test" ]; then rm -Rfv ${{ inputs.main_path }}/src/test; fi 
+      if [ -d "${{ inputs.main_path }}/expected" ]; then rm -Rfv ${{ inputs.main_path }}/expected; fi 
+      if [ -d "${{ inputs.main_path }}/input" ]; then rm -Rfv ${{ inputs.main_path }}/input; fi 
+    
   - name: Copy Fresh Test Code
     shell: bash
     run: |
-      echo "Configuring Test Environment..."   
+      echo "Copying Fresh Test Code..."   
       mkdir -p "${{ inputs.main_path }}/src/test/"
       cp -R "${{ inputs.test_path }}/src/test" "${{ inputs.main_path }}/src/"
 
